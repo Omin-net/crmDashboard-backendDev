@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Crm.Contract\Crm.Contract.csproj" />
+    <ProjectReference Include="..\Crm.Domain\Crm.Domain.csproj" />
   </ItemGroup>
 
 </Project>

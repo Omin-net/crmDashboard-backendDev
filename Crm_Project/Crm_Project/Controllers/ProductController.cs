@@ -1,5 +1,6 @@
 ﻿using Crm.Application.Products;
 using Crm.Application.Products.DTOs;
+using Crm.Domain.Products;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Crm_Project.Controllers
@@ -15,42 +16,51 @@ namespace Crm_Project.Controllers
             _productService = productService;
         }
 
+
+
         [HttpGet]
-        public IActionResult GetProduct()
+        public async Task<ActionResult<List<Product>>> GetAllProductWithProductDetail()
         {
-            var product = _productService.GetProducts();
-            return Ok(product);
+            List<Product> products = await _productService.GetAllProductsWithProductDetail();
+            return Ok(products);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetProductById(Guid id)
-        {
-            var product = _productService.GetProductById(id);
-            if (product == null)
-                return NotFound("product not found");
+        //[HttpGet]
+        //public IActionResult GetProduct()
+        //{
+        //    var product = _productService.GetProducts();
+        //    return Ok(product);
+        //}
 
-            return Ok(product);
-        }
-        [HttpPost]
-        public IActionResult AddProducts(AddProductDto product)
-        {
-            var result = _productService.AddProduct(product);
-            var url = Url.Action(nameof(GetProductById), "Product", new { id = result }, Request.Scheme);
-            return Created(url, result);
-        }
+        //[HttpGet("{id}")]
+        //public IActionResult GetProductById(Guid id)
+        //{
+        //    var product = _productService.GetProductById(id);
+        //    if (product == null)
+        //        return NotFound("product not found");
 
-        [HttpPut]
-        public IActionResult EditProduct(EditProductDto product)
-        {
-            _productService.EditProduct(product);
-            return Ok();
-        }
+        //    return Ok(product);
+        //}
+        //[HttpPost]
+        //public IActionResult AddProducts(AddProductDto product)
+        //{
+        //    var result = _productService.AddProduct(product);
+        //    var url = Url.Action(nameof(GetProductById), "Product", new { id = result }, Request.Scheme);
+        //    return Created(url, result);
+        //}
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteProduct(Guid id)
-        {
-            _productService.DeleteProductById(id);
-            return Ok();
-        }
+        //[HttpPut]
+        //public IActionResult EditProduct(EditProductDto product)
+        //{
+        //    _productService.EditProduct(product);
+        //    return Ok();
+        //}
+
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteProduct(Guid id)
+        //{
+        //    _productService.DeleteProductById(id);
+        //    return Ok();
+        //}
     }
 }

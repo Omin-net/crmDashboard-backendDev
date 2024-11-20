@@ -1,6 +1,7 @@
 ﻿using Crm.Application.Products.DTOs;
 using Crm.Domain.Products;
 using Crm.Domain.Products.Repository;
+
 namespace Crm.Application.Products
 {
     public class ProductService : IProductService
@@ -11,53 +12,58 @@ namespace Crm.Application.Products
             _productRepositroy = productRepositroy;
         }
 
-        public bool DeleteProductById(Guid id)
+        public async Task<List<Product>> GetAllProductsWithProductDetail()
         {
-            var boleanIsDeleted = _productRepositroy.DeleteProductById(id);
-            return boleanIsDeleted;
+            List<Product> products = await _productRepositroy.GetAllProductsWithProductDetail();
+            return products;
         }
 
-        //public void AddProduct(AddProductDto command)
+
+        //public bool DeleteProductById(Guid id)
         //{
-        //    var product = new Product(command.ProductName, command.Price, command.Description, command.Size, command.Color, command.Count);
-        //    _productRepositroy.AddProduct(product);
+        //    var boleanIsDeleted = _productRepositroy.DeleteProductById(id);
+        //    return boleanIsDeleted;
         //}
 
-        public void EditProduct(EditProductDto command)
-        {
-            var product = _productRepositroy.GetProductById(command.ProductId);
-            product.EditProduct(command.ProductName, command.Price, command.Description, command.Size, command.Color, command.Count);
-            _productRepositroy.UpdateProduct(product);
-        }
+        ////public void AddProduct(AddProductDto command)
+        ////{
+        ////    var product = new Product(command.ProductName, command.Price, command.Description, command.Size, command.Color, command.Count);
+        ////    _productRepositroy.AddProduct(product);
+        ////}
 
-        public Product GetProductById(Guid productId)
-        {
-            var product = _productRepositroy.GetProductById(productId);
-            return product;
-        }
+        //public void EditProduct(EditProductDto command)
+        //{
+        //    var product = _productRepositroy.GetProductById(command.ProductId);
+        //    product.EditProduct(command.ProductName, command.Price, command.Description,command.Color);
+        //    _productRepositroy.UpdateProduct(product);
+        //}
 
-        public List<ProductDto> GetProducts()
-        {
-            return _productRepositroy.GetAllProducts().Select(product => new ProductDto()
-            {
-                ProductId = product.ProductId,
-                ProductName = product.ProductName,
-                Price = product.Price,
-                Description = product.Description,
-                Size = product.Size,
-                Color = product.Color,
-                Count = product.Count
+        //public Product GetProductById(Guid productId)
+        //{
+        //    var product = _productRepositroy.GetProductById(productId);
+        //    return product;
+        //}
 
-            }).ToList();
-        }
+        //public List<ProductDto> GetProducts()
+        //{
+        //    return _productRepositroy.GetAllProducts().Select(product => new ProductDto()
+        //    {
+        //        ProductId = product.ProductId,
+        //        ProductName = product.ProductName,
+        //        Price = product.Price,
+        //        Description = product.Description,              
+        //        Color = product.Color,
 
-        Product IProductService.AddProduct(AddProductDto command)
-        {
-            var product = new Product(command.ProductName, command.Price, command.Description, command.Size, command.Color, command.Count);
-            _productRepositroy.AddProduct(product);
-            return product;
-        }
+        //    }).ToList();
+        //}
 
-    
+        //Product IProductService.AddProduct(AddProductDto command)
+        //{
+        //    var product = new Product(command.ProductName, command.Price, command.Description,  command.Color);
+        //    _productRepositroy.AddProduct(product);
+        //    return product;
+        //}
+
+
     }
 }

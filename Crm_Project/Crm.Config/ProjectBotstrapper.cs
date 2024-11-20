@@ -1,7 +1,7 @@
 ﻿using Crm.Application.Products;
 using Crm.Domain.Products.Repository;
 using Crm.Infrastructure.Persestent.Ef;
-using Crm.Infrastructure.Persestent.Ef.Repository;
+using Crm.Infrastructure.Persestent.Ef.Repository.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,10 +11,10 @@ namespace Crm.Config
     {
         public static void Init(IServiceCollection services, string connectionString)
         {
-            services.AddTransient<IProductRepositroy, ProductRepository>();
-            services.AddTransient<IProductService, ProductService>();
+            services.AddScoped<IProductRepositroy, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
 
-            services.AddDbContext<CrmContext>(option =>
+            services.AddDbContext<ApplicationDbContext>(option =>
             {
                 option.UseSqlServer(connectionString);
             });

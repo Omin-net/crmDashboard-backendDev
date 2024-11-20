@@ -1,5 +1,6 @@
 
 using Crm.Config;
+using System.Text.Json.Serialization;
 
 namespace Crm_Project
 {
@@ -18,8 +19,16 @@ namespace Crm_Project
 
             ProjectBotstrapper.Init(builder.Services,builder.Configuration.GetConnectionString("DefaultConnection"));
 
-            var app = builder.Build();
 
+            //  Cycle Erorr Ef
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                // add this code to prevent cycles when navigating bettven relation
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
+
+
+            var app = builder.Build();
        
             if (app.Environment.IsDevelopment())
             {

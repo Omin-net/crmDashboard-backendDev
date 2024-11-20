@@ -5,10 +5,9 @@ namespace Crm.Application.Products
 {
     public interface IProductService
     {
-        Product AddProduct(AddProductDto command);
-        void EditProduct(EditProductDto command);
-        List<ProductDto> GetProducts();
-        Product GetProductById(Guid productId);
-        bool DeleteProductById(Guid id);
+
+        Task<List<Product>> GetAllProductsWithProductDetail();
+
     }
+
 }
